@@ -80,12 +80,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
     
     -- launch pcmanfm
-    , ((modm, xK_z     ), spawn "pcmanfm")
+    , ((modm, xK_z     ), spawn "thunar")
 
     -- launch fsearch
     , ((modm, xK_f     ), spawn "fsearch")
-
-    , ((modm, xK_w ), spawn "flameshot gui")
 
     -- launch gmrun
     , ((modm , xK_b     ), spawn "firefox")
@@ -204,19 +202,24 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = draggingVisualizer $ avoidStruts (tiled ||| Mirror tiled ||| Full)
+myLayout = draggingVisualizer $ avoidStruts (tiled ||| tall720 ||| Full)
   where
-     -- default tiling algorithm partitions the screen into two panes
+     -- default (50/50)
      tiled   = reflectHoriz $ Tall nmaster delta ratio
-
+     ratio   = 1/2
+     
+     -- vertical mirror of default
+     mirrorTiled = Mirror tiled
+     
+     -- 720/180
+     tall720 = reflectHoriz $ Tall nmaster delta ratio720
+     ratio720 = 0.720
+     
      -- The default number of windows in the master pane
      nmaster = 1
-
-     -- Default proportion of screen occupied by master pane
-     ratio   = 1/2
-
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
+     
 
 ------------------------------------------------------------------------
 -- Window rules:
